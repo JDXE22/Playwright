@@ -90,5 +90,37 @@ import { test, expect, Browser, Page } from "@playwright/test";
         await page.getByRole("link", { name: "Jueves" }).click();
       });
     });
+
+    test("In the Automation Sandbox, you can upload a file", async ({
+      page,
+    }) => {
+      await test.step("Since I am navigating the Sandbox of FreeRangers", async () => {
+        await page.goto(
+          "https://thefreerangetester.github.io/sandbox-automation-testing/"
+        );
+      });
+
+      await test.step("I can upload a file", async () => {
+        await page
+          .getByLabel("Upload file")
+          .setInputFiles(["Invoice 1.pdf", "Invoice 2.pdf", "Invoice 3.pdf"]);
+      });
+    });
+
+    test("In the Automation Sandbox, you can drag and drop elements", async ({
+      page,
+    }) => {
+      await test.step("Since I am navigating the Sandbox of FreeRangers", async () => {
+        await page.goto(
+          "https://thefreerangetester.github.io/sandbox-automation-testing/"
+        );
+      });
+
+      await test.step("I can drag and drop the element", async () => {
+        await page
+          .getByTestId("draggable")
+          .dragTo(page.getByTestId("droppable"));
+      });
+    });
   });
 })();
