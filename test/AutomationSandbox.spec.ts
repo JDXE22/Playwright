@@ -33,5 +33,34 @@ import { test, expect, Browser, Page } from "@playwright/test";
         await page.getByPlaceholder("Ingresá texto").fill("Juan");
       });
     });
+
+    test("Checkboxes can be selected in the Automation Sandbox", async ({
+      page,
+    }) => {
+      await test.step("Since I am navigating the Sandbox of FreeRangers", async () => {
+        await page.goto(
+          "https://thefreerangetester.github.io/sandbox-automation-testing/"
+        );
+      });
+
+      await test.step("I can select the option 'Pasta'", async () => {
+        await page.getByLabel("Pasta 🍝").check();
+        await page.getByLabel("Pasta 🍝").uncheck();
+      });
+    });
+
+    test("Radio buttons can be selected in the Automation Sandbox", async ({
+      page,
+    }) => {
+      await test.step("Since I am navigating the Sandbox of FreeRangers", async () => {
+        await page.goto(
+          "https://thefreerangetester.github.io/sandbox-automation-testing/"
+        );
+      });
+
+      await test.step("I can select the option 'No' button", async () => {
+        await page.getByLabel("No").check();
+      });
+    });
   });
 })();
