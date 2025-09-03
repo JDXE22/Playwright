@@ -62,5 +62,33 @@ import { test, expect, Browser, Page } from "@playwright/test";
         await page.getByLabel("No").check();
       });
     });
+
+    test("In the dropdown menu of the Automation Sandbox, you can select an item", async ({
+      page,
+    }) => {
+      await test.step("Since I am navigating the Sandbox of FreeRangers", async () => {
+        await page.goto(
+          "https://thefreerangetester.github.io/sandbox-automation-testing/"
+        );
+      });
+
+      await test.step("I can select the sport option of the dropdown", async () => {
+        await page.getByLabel("Dropdown").selectOption("Tennis");
+      });
+    });
+    test("In the dropdown menu of the Automation Sandbox, you can select the days of the week", async ({
+      page,
+    }) => {
+      await test.step("Since I am navigating the Sandbox of FreeRangers", async () => {
+        await page.goto(
+          "https://thefreerangetester.github.io/sandbox-automation-testing/"
+        );
+      });
+
+      await test.step("I can select a day of the week", async () => {
+        await page.getByRole("button", { name: "Día de la semana" }).click();
+        await page.getByRole("link", { name: "Jueves" }).click();
+      });
+    });
   });
 })();
