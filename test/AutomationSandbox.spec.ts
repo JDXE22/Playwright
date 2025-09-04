@@ -4,6 +4,8 @@ import { test, expect, Browser, Page } from "@playwright/test";
   let browser: Browser;
   let page: Page;
 
+  const textToWrite = `Hola, este es un texto de prueba para el campo de texto.`;
+
   test.describe("Actions in the Automation Sadbox", () => {
     test("Click in the dinamyc Id", async ({ page }) => {
       await test.step("Since I am navigating the Sandbox of FreeRangers", async () => {
@@ -13,11 +15,16 @@ import { test, expect, Browser, Page } from "@playwright/test";
       });
 
       await test.step("When I click in the button with dinamyc id", async () => {
-        await page
-          .getByRole(`button`, {
-            name: `Hacé click para generar un ID dinámico y mostrar el elemento oculto`,
-          })
-          .click();
+        const idButton = page.getByRole(`button`, {
+          name: `Hacé click para generar un ID dinámico y mostrar el elemento oculto`,
+        });
+
+        await idButton.click({ force: true });
+        await expect(
+          page.getByText(
+            "OMG, aparezco después de 3 segundos de haber hecho click en el botón 👻."
+          )
+        ).toBeVisible();
       });
     });
 
@@ -31,6 +38,11 @@ import { test, expect, Browser, Page } from "@playwright/test";
       });
       await test.step("When I fill out the text field with my name", async () => {
         await page.getByPlaceholder("Ingresá texto").fill("Juan");
+      });
+
+      await test.step(`I can write a boring text in the textarea`, async () => {
+        await expect(page.getByPlaceholder("Ingresá texto")).toBeEditable();
+        await page.getByPlaceholder("Ingresá texto").fill(textToWrite);
       });
     });
 
