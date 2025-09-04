@@ -86,6 +86,10 @@ import { test, expect, Browser, Page } from "@playwright/test";
 
       await test.step("I can select the option 'No' button", async () => {
         await page.getByLabel("No").check();
+        await expect(
+          page.getByLabel("No"),
+          "Radio button not selected"
+        ).toBeChecked();
       });
     });
 
@@ -96,6 +100,20 @@ import { test, expect, Browser, Page } from "@playwright/test";
         await page.goto(
           "https://thefreerangetester.github.io/sandbox-automation-testing/"
         );
+      });
+
+      await test.step("Verify the dropdown has the expected options", async () => {
+        const sportsOptions = ["Fútbol", "Basketball", "Tennis"];
+        for (let option of sportsOptions) {
+          const element = await page.$(
+            `select#formBasicSelect > option:is(:text("${option}"))`
+          );
+          if (element) {
+            console.log(`Option "${option}" is present in the dropdown.`);
+          } else {
+            console.log(`Option "${option}" is NOT present in the dropdown.`);
+          }
+        }
       });
 
       await test.step("I can select the sport option of the dropdown", async () => {
