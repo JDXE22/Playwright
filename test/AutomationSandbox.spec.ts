@@ -45,7 +45,15 @@ import { test, expect, Browser, Page } from "@playwright/test";
 
       await test.step("I can select the option 'Pasta'", async () => {
         await page.getByLabel("Pasta 🍝").check();
+        await expect(
+          page.getByLabel("Pasta 🍝"),
+          "Checbox was not selected"
+        ).toBeChecked();
+      });
+
+      await test.step("I can unselect the option 'Pasta'", async () => {
         await page.getByLabel("Pasta 🍝").uncheck();
+        await expect(page.getByLabel("Pasta 🍝")).not.toBeChecked();
       });
     });
 
