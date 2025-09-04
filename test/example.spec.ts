@@ -7,8 +7,16 @@ import { test, expect, Browser, Page } from "@playwright/test";
   test.describe("Navigation on FreeRangers", () => {
     const sections = [
       { name: "Cursos", url: "/cursos", expectedTitle: /Cursos/i },
-      { name: "Mentorías", url: "/mentorias", expectedTitle: /Mentorías/i },
-      { name: "Talleres", url: "/talleres", expectedTitle: /Talleres/i },
+      {
+        name: "Mentorías",
+        url: "/mentoria-1-1-con-pato",
+        expectedTitle: /Mentoria/i,
+      },
+      {
+        name: "Talleres",
+        url: "/talleres-y-webinars",
+        expectedTitle: /Talleres-y-webinars/i,
+      },
       { name: "Blog", url: "/blog", expectedTitle: /Blog/i },
       { name: "Recursos", url: "/recursos", expectedTitle: /Recursos/i },
       {
@@ -25,6 +33,15 @@ import { test, expect, Browser, Page } from "@playwright/test";
             waitUntil: "domcontentloaded",
           });
           await expect(page).toHaveURL(/freerangetesters\.com/i);
+        });
+        await test.step(`When I click on the ${section.name} link`, async () => {
+          page
+            .locator(`#page_header`)
+            .getByRole("link", { name: section.name, exact: true })
+            .click();
+          await page.waitForURL(`**${section.url}`, {
+            waitUntil: "domcontentloaded",
+          });
         });
       });
     }
