@@ -41,8 +41,14 @@ import { test, expect, Browser, Page } from "@playwright/test";
       });
 
       await test.step(`I can write a boring text in the textarea`, async () => {
-        await expect(page.getByPlaceholder("Ingresá texto")).toBeEditable();
+        await expect(
+          page.getByPlaceholder("Ingresá texto"),
+          "Text area can't be edited"
+        ).toBeEditable();
         await page.getByPlaceholder("Ingresá texto").fill(textToWrite);
+        await expect(page.getByPlaceholder("Ingresá texto")).toHaveValue(
+          textToWrite
+        );
       });
     });
 
